@@ -1,8 +1,49 @@
 angular.module('studyAssistant.services', [])
-.service('User', [ function($scope) {
-    var user = {}
+.service('User', [ 'Utility',function(Utility) {
+    var user = {};
+    var baseUrl = 'https://studywod.firebaseio.com//'; //TODO da eliminare
+    var auth = Utility.getAuth();
     this.setUsername = function(username){
         user.username = username
+    }
+
+    function authDataCallback(authData) {
+                    if (authData) {
+                        auth.child("users").child(authData.uid).once("value", function (utente) { //aggiungo l'utente alla lista di utenti in firebase alprimo login
+                        user.logged = true
+                        user.uid = authData.uid
+                        user.image = authData.password.profileImageURL
+                        // configuro l'oggetto user da aggiungere al db di firebase
+                            newUser = utente.val() || { // se l'utente è già presente lo riscrivo uguale
+                                provider : authData.provider,
+                                name : getName(authData)
+                            }
+                                // save the user's profile into the database so we can list users,
+                                // use them in Security and Firebase Rules, and show profiles
+                                auth.child("users").child(authData.uid).set(newUser);
+                        })
+
+                    } else {
+                        console.log("User is logged out"); //TODO popup
+                    }
+                }
+
+
+    this.validateUser = function (mail, password, cback) {
+                        auth.onAuth(authDataCallback); //invocato al login
+                        console.log('validating user')
+                        auth.authWithPassword({
+                             email : mail,
+                             password : password
+                        }, cback)
+    
+                   }
+    this.setUid = function(uid){
+    user.uid = uid
+    }
+
+    this.getUid = function(){
+        return user.uid
     }
 
     this.setEmail = function(email){
@@ -36,4 +77,4 @@ angular.module('studyAssistant.services', [])
 
 }
 
-	])
+     ])

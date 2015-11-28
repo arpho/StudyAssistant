@@ -8,12 +8,14 @@
         </div>
         <div class="list">
             <form name ="loginForm">
-            <ion-md-input placeholder="email"  highlight-color="balanced" type="email" ng-model="loginData.email" required></ion-md-input>
+            <ion-md-input class='dirtyClass' placeholder="email"  highlight-color="balanced" type="email" ng-model="loginData.email" required></ion-md-input>
             <ion-md-input placeholder="Password" highlight-color="energized" type="password" ng-model="loginData.password" required></ion-md-input><p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
+                <span class="input-label" style="font-weight=700"> RICORDA</span>
+            <input type="checkbox"  placeholder="ricorda" ng-model="loginData.rememberCredentials" />
             </form>
         </div>
         <div class="padding">
-            <button ui-sref="app.profile" class="button button-full button-royal ink"  ng-click="doLogin()">Login</button>
+            <button  class="button button-full button-royal ink"  ng-click="doLogin()">Login</button>
         </div>
         <div class="button-bar social-login">
             <button class="button button-small button-border icon-left ion-social-google button-assertive-900">Google+</button>
