@@ -1,5 +1,5 @@
 angular.module('studyAssistant.controllers')
-.controller('LoginCtrl',['$scope','User','Utility','Activity',function($scope,User,Utilities,Activity, $timeout, $stateParams, ionicMaterialInk){
+.controller('LoginCtrl',['$scope','User','Utility','Activity','$state',function($scope,User,Utilities,Activity,$state, $timeout, $stateParams, ionicMaterialInk){
     $scope.loginData.rememberCredentials = (Utilities.getLocalValue('rememberCredentials',false)=='true')
     $scope.loginData.email = Utilities.getLocalValue('email')
     $scope.loginData.password = Utilities.getLocalValue('password')
@@ -22,11 +22,14 @@ angular.module('studyAssistant.controllers')
             Utilities.setLocalValue('rememberCredentials',false)
             //carico i tasks da firebase
             // ottengo il riferimento a firebase
-            var ref = Utilities.getActivitiesRef()
+            var ref = Utilities.getAuth()
             // creo la funzione di callback per i tasks
             var taskCback = function(data){
                 Activity.setRawTasks(data.val())
-                console.log('ricevuti i tasks')
+                console.log('ricevuti i tasks',data.val())
+                $state.go('app.activity')
+
+
             }
             //recupero i tasks da firebase
             Activity.retrieveTasks(ref,taskCback)

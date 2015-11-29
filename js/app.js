@@ -38,8 +38,9 @@ angular.module('studyAssistant', ['ionic', 'studyAssistant.controllers','studyAs
     })
 
     .state('app.activity', {
-        url: '/activity',
-        views: {
+        url: '/activity'
+        ,name:'activity'
+        ,views: {
             'menuContent': {
                 templateUrl: 'templates/activity.html',
                 controller: 'ActivityCtrl'

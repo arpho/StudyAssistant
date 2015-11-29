@@ -20,13 +20,16 @@ angular.module('studyAssistant.services')
     
  }
 
- this.getTasks = function(){
-     var tasks = []
-     for (var key in rawTasks){ // per comodità aggiungo a tutti i task il campo key
-        var val = rawTasks[key]
-        val.key = key
-        tasks.push(val)
+ this.createTask = function (ref,task, cback) {
+     				ref.child("tasks").child(User.getUid()).push(task, cback);
+     			}
+/*
+ritorna i   task contenuti in rawTasks, normalizzati secondo la funzione passata come parametro
+@param funzione normalizzatrice:: {}-> custom object
+@return custom object
+*/
+ this.getTasks = function(normalizer){
+     return normalizer(rawTasks)
      }
-     return tasks
  }
-}])
+])
