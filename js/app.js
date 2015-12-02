@@ -20,7 +20,7 @@ angular.module('studyAssistant', ['ionic', 'studyAssistant.controllers','studyAs
     });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider',function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
     // Turn off caching for demo simplicity's sake
     $ionicConfigProvider.views.maxCache(0);
@@ -47,12 +47,42 @@ angular.module('studyAssistant', ['ionic', 'studyAssistant.controllers','studyAs
             },
             'fabContent': {
                 template: '<button id="fab-activity" ng-click="newTask()" class="button button-fab button-fab-top-right expanded button-energized-900 flap"><i class="icon ion-plus"></i></button>',
-                controller: function ($timeout,$scope) {
+                controller: function ($timeout,$scope,$ionicModal,Activity,Utility) {
                     $timeout(function () {
                         document.getElementById('fab-activity').classList.toggle('on');
                     }, 200);
                     $scope.newTask = function(){
-                    console.log('click')}
+                        $scope.task = {} // inserisco un nuovo task nello scope
+                        $scope.action = 'Crea'// setto il testo del bottone sul popup
+
+                        $scope.doAction = function(){
+                        $scope.task.lastTime = Utility.formatDate(new Date())
+                        $scope.task.nextTime = Utility.formatDate(Utility.addDays(new Date(),1)) /* quando creo il task
+                        ipotizzo che sia la prima ripetizione quindi nextTime è l'indomani */
+                        $scope.task.rep = 0
+                        $scope.task.history = []
+                        $scope.task.history.push($scope.task.lastTime)
+                        console.log('creato task',$scope.task)
+                        var ref = Utility.getAuth()
+                        var cback = function(){
+                            console.log('creato task success param')
+                            console.log('creato task error')
+                            $scope.closeModal()// chiude il popup
+                        }
+                        Activity.createTask(ref,$scope.task,cback)
+                        }
+                        $ionicModal.fromTemplateUrl('templates/taskPopup.html',{scope:$scope
+                                                                                ,animation:'slide-in-up'}).then(function(modal){
+                                                                                    $scope.modal = modal;
+                                                                                    $scope.openModal = function() {
+                                                                                        $scope.modal.show();
+                                                                                    };
+                                                                                    $scope.closeModal = function() {
+                                                                                        $scope.modal.hide();
+                                                                                    };
+                                                                                    $scope.openModal()
+                                                                                })
+                    }
                 }
             }
         }
@@ -128,4 +158,4 @@ angular.module('studyAssistant', ['ionic', 'studyAssistant.controllers','studyAs
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/login');
-});
+}]);

@@ -20,7 +20,7 @@ angular.module('studyAssistant.controllers')
                              }
                         return tasks
                     }
-            //metto nello  i task normalizzati
+            //metto nello $scope i task normalizzati
             $scope.activities = Activity.getTasks(normalizer)
 
            }
@@ -41,7 +41,7 @@ angular.module('studyAssistant.controllers')
         return tasks
     }
     //$scope.activities = Activity.getTasks(normalizer)
-    console.log($scope.activities)
+
 
     $timeout(function() {
         ionicMaterialMotion.fadeSlideIn({
