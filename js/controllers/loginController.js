@@ -20,6 +20,7 @@ angular.module('studyAssistant.controllers')
             }
             else
             Utilities.setLocalValue('rememberCredentials',false)
+            $state.go('app.activity')
             //carico i tasks da firebase
             // ottengo il riferimento a firebase
             var ref = Utilities.getAuth()
@@ -27,12 +28,11 @@ angular.module('studyAssistant.controllers')
             var taskCback = function(data){
                 Activity.setRawTasks(data.val())
                 console.log('ricevuti i tasks',data.val())
-                $state.go('app.activity')
+
 
 
             }
-            //recupero i tasks da firebase
-            Activity.retrieveTasks(ref,taskCback)
+
 
            }
            }

@@ -6,6 +6,27 @@ angular.module('studyAssistant.controllers')
         console.log('utente non loggato')
         $state.go('app.login')
     }
+    else{
+        var ref = Utility.getAuth()
+           var taskCback = function(data){
+                            Activity.setRawTasks(data.val())
+                            console.log('ricevuti i tasks',data.val())
+                var normalizer = function(rawTasks){
+                        var tasks = []
+                             for (var key in rawTasks){ // per comodità aggiungo a tutti i task il campo key
+                                var val = rawTasks[key]
+                                val.key = key
+                                tasks.push(val)
+                             }
+                        return tasks
+                    }
+            //metto nello  i task normalizzati
+            $scope.activities = Activity.getTasks(normalizer)
+
+           }
+        //recupero i tasks da firebase
+        Activity.retrieveTasks(ref,taskCback)
+    }
     $scope.isExpanded = true;
     $scope.$parent.setExpanded(true);
     $scope.$parent.setHeaderFab('right');
@@ -19,7 +40,7 @@ angular.module('studyAssistant.controllers')
              }
         return tasks
     }
-    $scope.activities = Activity.getTasks(normalizer)
+    //$scope.activities = Activity.getTasks(normalizer)
     console.log($scope.activities)
 
     $timeout(function() {
