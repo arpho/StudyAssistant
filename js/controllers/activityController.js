@@ -10,7 +10,7 @@ angular.module('studyAssistant.controllers')
         var ref = Utility.getAuth()
            var taskCback = function(data){
                             Activity.setRawTasks(data.val())
-                            console.log('ricevuti i tasks',data.val())
+                            console.log('task callback ricevuti i tasks',data.val())
                 var normalizer = function(rawTasks){
                         var tasks = []
                              for (var key in rawTasks){ // per comodità aggiungo a tutti i task il campo key
@@ -22,6 +22,7 @@ angular.module('studyAssistant.controllers')
                     }
             //metto nello $scope i task normalizzati
             $scope.activities = Activity.getTasks(normalizer)
+            console.log('lista tasks ',$scope.activities)
 
            }
         //recupero i tasks da firebase
@@ -30,6 +31,9 @@ angular.module('studyAssistant.controllers')
     $scope.isExpanded = true;
     $scope.$parent.setExpanded(true);
     $scope.$parent.setHeaderFab('right');
+
+
+
 
     var normalizer = function(rawTasks){
         var tasks = []
