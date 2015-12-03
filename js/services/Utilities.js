@@ -117,6 +117,12 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
             return ref
 
         }
+        ,activeFilter,setActiveFilter = function(filter){
+        activeFilter = filter
+        }
+        ,getActiveFilter = function(){
+            return activeFilter;
+        }
         /* ritorna l'elemento di una lista ha chiave = key
         @param String: chiavericercata
         @param Array[object]
@@ -139,6 +145,8 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
                     ,'notify':notify
                     ,'getAuth':getAuth
                     ,'formatDate': formatDate
+                    ,'setActiveFilter':setActiveFilter
+                    ,'getActiveFilter':getActiveFilter
                     ,'addDays': addDays
                     ,'getActivitiesRef':getActivitiesRef
                     ,'getPreviousState':getPreviousState

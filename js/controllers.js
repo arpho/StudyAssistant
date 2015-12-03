@@ -3,12 +3,28 @@
 
 angular.module('studyAssistant.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout) {
+.controller('AppCtrl', ['$scope', '$ionicModal', '$ionicPopover', '$timeout','Utility','$ionicActionSheet','$rootScope',function($scope, $ionicModal, $ionicPopover, $timeout,Utility,$ionicActionSheet,$rootScope) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
     $scope.hasHeaderFabLeft = false;
     $scope.hasHeaderFabRight = false;
+    $scope.filter = function(){
+                                      var filterSheet = $ionicActionSheet.show({
+                                          buttons:[
+                                              {text:'Wod(work of day)'}
+                                              ,{text:'Wot(Work of tomorrow)'}
+                                              ,{text:'All'}
+                                          ]
+                                          ,buttonClicked:function(index){
+                                              console.log('scelto:',index);
+                                              //console.log('filterParam',$scope.filterParam)
+//                                              Utility.setActiveFilter(index)
+                                              $rootScope.$broadcast('settedFilter',index)
+                                              filterSheet()
+                                          }
+                                      })
+                                  }
 
     var navIcons = document.getElementsByClassName('ion-navicon');
     for (var i = 0; i < navIcons.length; i++) {
@@ -85,7 +101,7 @@ angular.module('studyAssistant.controllers', [])
             fabs[0].remove();
         }
     };
-})
+}])
 
 .controller('LoginCtrlOld', function($scope, $timeout, $stateParams, ionicMaterialInk) {
     $scope.$parent.clearFabs();

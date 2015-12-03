@@ -1,8 +1,8 @@
 
 <ion-view view-title="Activity">
+    <ion-content ng-class="{expanded:isExpanded}"  can-swipe="listCanSwipe" class="animate-fade-slide-in">
 
-    <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in">
-        <div class="item card-item card stable-bg ink ink-dark card-footer " ng-repeat="activity in activities">
+        <div class="ion-item card-item card stable-bg ink ink-dark card-footer " ng-repeat="activity in activities|filter:customFilter">
             <span class="avatar" style="background-image: url('img/task.jpg');">
                 <button  ng-click="newTask()" class="button button-fab button-fab-top-right expanded button-energized-900 flap"><i class="icon ion-plus"></i></button>
 
@@ -17,10 +17,8 @@
                 <br><strong>ultima ripetizione: </strong>{{activity.lastTime}}
                 <br> <strong>prossima ripetizione: </strong>{{activity.nextTime}}
                 <br> <strong>Ripetizioni:</strong> {{activity.rep}}
-                <span><button class="button button-fab button-fab-top-right expanded button-assertive-900 "><i class="icon ion-ios-trash"></i></button>
-                <button class="button button-fab button-fab-bottom-left expanded button-calm-900 "><i class="icon ion-android-done"></i></button>
-                </span>
-                <span></span>
+                <ion-option-button class="button-light icon ion-heart"></ion-option-button>
+                <ion-option-button class="button-assertive icon ion-trash-a"></ion-option-button>
 
             </div>
             </div>
