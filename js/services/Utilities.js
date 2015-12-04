@@ -3,7 +3,8 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
 ,'$window'
 ,'$ionicLoading'
 ,'$timeout'
-,function($firebaseAuth,popup,$window, $ionicLoading, $timeout){
+,'$ionicModal'
+,function($firebaseAuth,popup,$window, $ionicLoading, $timeout,$ionicModal){
     /* memorizza un valore in locale
     @param String chiave
     @param String valore
@@ -126,6 +127,19 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
             return ref
 
         }
+        ,showModal = function(template,animation,Scope){
+         $ionicModal.fromTemplateUrl(template,{scope:Scope
+                                                                                         ,animation:animation}).then(function(modal){
+                                                                                             Scope.modal = modal;
+                                                                                             Scope.openModal = function() {
+                                                                                                 Scope.modal.show();
+                                                                                             };
+                                                                                             Scope.closeModal = function() {
+                                                                                                 Scope.modal.hide();
+                                                                                             };
+                                                                                             Scope.openModal()
+                                                                                         })
+         }
         ,activeFilter,setActiveFilter = function(filter){
         activeFilter = filter
         }
@@ -135,13 +149,12 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
         /* ritorna l'elemento di una lista ha chiave = key
         @param String: chiavericercata
         @param Array[object]
-        @note  gli oggetti dell'array devonoavere un campo key*/
+        @note  gli oggetti dell'array devono avere un campo key*/
         ,retrieveTask = function(key,tasks){
         var out;
         angular.forEach(tasks,function(task){
 
         if (task.key == key) out = task
-        console.log(key,task.key,key == task.key)
 
         })
         return out
@@ -167,6 +180,7 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
                     ,'confirmPopup':confirmPopup
                     ,'counter': counter
                     ,'retrieveTask':retrieveTask
+                    ,'showModal':showModal
                 };
 
 }]

@@ -71,17 +71,8 @@ angular.module('studyAssistant', ['ionic', 'studyAssistant.controllers','studyAs
                         }
                         Activity.createTask(ref,$scope.task,cback)
                         }
-                        $ionicModal.fromTemplateUrl('templates/taskPopup.html',{scope:$scope
-                                                                                ,animation:'slide-in-up'}).then(function(modal){
-                                                                                    $scope.modal = modal;
-                                                                                    $scope.openModal = function() {
-                                                                                        $scope.modal.show();
-                                                                                    };
-                                                                                    $scope.closeModal = function() {
-                                                                                        $scope.modal.hide();
-                                                                                    };
-                                                                                    $scope.openModal()
-                                                                                })
+                        Utility.showModal('templates/taskPopup.html','slide-in-up',$scope)
+
                     }
                 }
             }

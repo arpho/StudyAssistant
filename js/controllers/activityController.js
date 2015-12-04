@@ -25,8 +25,39 @@ angular.module('studyAssistant.controllers')
             //console.log('lista tasks ',$scope.activities)
 
            }
+        $scope.view = function(key){
+            var task = Utility.retrieveTask(key,Activity.getTasks(normalizer))
+            console.log('viewing',key)
+            $scope.task = task
+            $scope.action = 'Modifica'
+            $scope.doAction = function(){
+                task = angular.copy(task) //rimuovo i campi di ng-repeat
+                Activity.updateTask(ref,task)
+            }
+
+            Utility.showModal('templates/taskPopup.html','slide-in-up',$scope)
+        }
+        $scope.done = function(key){
+        var today = Utility.formatDate(new Date())
+        var task = Utility.retrieveTask(key,Activity.getTasks(normalizer))
+        task.lastTime = today
+        task.rep++
+        task.history.push(today)
+        task.nextTime = Utility.formatDate(Utility.addDays(new Date(),Activity.getDays(task.rep)))
+        Activity.updateTask(ref,angular.copy(task))
+        Utilities.notify("prossima volta "+ task.nextTime)
+        }
         //recupero i tasks da firebase
         Activity.retrieveTasks(ref,taskCback)
+    }
+
+    $scope.deleteTask = function(key){
+        var task = Utility.retrieveTask(key,Activity.getTasks(normalizer))
+        Utility.confirmPopup('cancellare '+task.activity+'?'
+        ,'Vuoi proprio farlo?'
+        ,function(){Activity.deleteTask(ref,key)}
+        ,function(){console.log('no non vuole')})
+
     }
     $scope.isExpanded = true;
     $scope.$parent.setExpanded(true);
