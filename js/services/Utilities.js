@@ -11,9 +11,18 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
     var setLocalValue = function(key,value){
         $window.localStorage[key] = value
     }
+    ,filterTitle = {}
+    filterTitle[0] = 'WOD: work of day'
+    filterTitle[1] = 'WOT: work of tomorrow'
+    filterTitle[2] = 'ALL: tutte le attività inserite'
+
 
     //variabile usata per evitare le ripetizioni
     ,repetition = {}
+    ,getFilterTitle = function(index){
+        title = filterTitle[index] ||'indice filtro non definito'
+        return title
+    }
     /*
     dato un identificativo verifica se è già stato inizializzato
     @param key: string chiave di controllo
@@ -67,7 +76,7 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
                 return   [d.getDate(), d.getMonth()+1, d.getFullYear()].join('/')
             }
 
-            ,previousState,
+            var previousState,
             setPreviousState = function(state){
                 previousState = state
             }
@@ -148,6 +157,7 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
                     ,'setActiveFilter':setActiveFilter
                     ,'getActiveFilter':getActiveFilter
                     ,'addDays': addDays
+                    ,'getFilterTitle':getFilterTitle
                     ,'getActivitiesRef':getActivitiesRef
                     ,'getPreviousState':getPreviousState
                     ,'setPreviousState':setPreviousState

@@ -3,24 +3,36 @@
 
 angular.module('studyAssistant.controllers', [])
 
-.controller('AppCtrl', ['$scope', '$ionicModal', '$ionicPopover', '$timeout','Utility','$ionicActionSheet','$rootScope',function($scope, $ionicModal, $ionicPopover, $timeout,Utility,$ionicActionSheet,$rootScope) {
+.controller('AppCtrl', ['$scope', '$ionicModal', '$ionicPopover', '$timeout','Utility','$ionicActionSheet','$rootScope','$state',function($scope, $ionicModal, $ionicPopover, $timeout,Utility,$ionicActionSheet,$rootScope,$state) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
     $scope.hasHeaderFabLeft = false;
     $scope.hasHeaderFabRight = false;
+    $scope.activeFilterName =''
+    $scope.showFunnel =  $state.current.name =='app.activity'
+    $rootScope.$on('stateChangeSuccess',function(event, toState, toParams){
+    console.log(event,toState,toParams)
+        $scope.showFunnel = $state.current.name =='app.activity'
+        console.log('statuschanged')
+    })
     $scope.filter = function(){
                                       var filterSheet = $ionicActionSheet.show({
                                           buttons:[
-                                              {text:'Wod(work of day)'}
-                                              ,{text:'Wot(Work of tomorrow)'}
-                                              ,{text:'All'}
+                                              {text:Utility.getFilterTitle(0)}
+                                              ,{text:Utility.getFilterTitle(1)}
+                                              ,{text:Utility.getFilterTitle(2)}
                                           ]
                                           ,buttonClicked:function(index){
                                               console.log('scelto:',index);
+                                              var filterName =[]
+                                              filterName[0] = Utility.getFilterTitle(0)
+                                              filterName[1] = Utility.getFilterTitle(1)
+                                              filterName[2] = Utility.getFilterTitle(2)
                                               //console.log('filterParam',$scope.filterParam)
 //                                              Utility.setActiveFilter(index)
-                                              $rootScope.$broadcast('settedFilter',index)
+                                              $rootScope.$broadcast('settedFilter',index) // propago il segnale a tutti gli scope così che activityController sia informato
+                                              $scope.activeFilterName = filterName[index] // setto il testo del filtro
                                               filterSheet()
                                           }
                                       })

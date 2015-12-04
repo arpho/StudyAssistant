@@ -1,8 +1,8 @@
 
 <ion-view view-title="Activity">
-    <ion-content ng-class="{expanded:isExpanded}"  can-swipe="listCanSwipe" class="animate-fade-slide-in">
-
-        <div class="ion-item card-item card stable-bg ink ink-dark card-footer " ng-repeat="activity in activities|filter:customFilter">
+    <ion-content ng-class="{expanded:isExpanded}"   >
+        <ion-list>
+        <div class="ion-item item-remove-animate card-item card stable-bg ink ink-dark  " can-swipe="true" ng-repeat="activity in activities|filter:customFilter">
             <span class="avatar" style="background-image: url('img/task.jpg');">
                 <button  ng-click="newTask()" class="button button-fab button-fab-top-right expanded button-energized-900 flap"><i class="icon ion-plus"></i></button>
 
@@ -22,5 +22,7 @@
 
             </div>
             </div>
+        </ion-list>
     </ion-content>
+
 </ion-view>
