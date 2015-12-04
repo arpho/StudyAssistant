@@ -32,7 +32,7 @@ angular.module('studyAssistant.controllers')
             $scope.action = 'Modifica'
             $scope.doAction = function(){
                 task = angular.copy(task) //rimuovo i campi di ng-repeat
-                Activity.updateTask(ref,task)
+                Activity.updateTask(ref,$scope.task)
             }
 
             Utility.showModal('templates/taskPopup.html','slide-in-up',$scope)
