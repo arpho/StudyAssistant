@@ -33,7 +33,7 @@ angular.module('studyAssistant.controllers')
             $scope.doAction = function(){
             delete task.key
                 task = angular.copy(task) //rimuovo i campi di ng-repeat
-                Activity.updateTask(ref,angular.copy($scope.task))
+            $scope.closeModal()
             }
 
             Utility.showModal('templates/taskPopup.html','slide-in-up',$scope)
@@ -46,7 +46,7 @@ angular.module('studyAssistant.controllers')
         task.history.push(today)
         task.nextTime = Utility.formatDate(Utility.addDays(new Date(),Activity.getDays(task.rep)))
         Activity.updateTask(ref,angular.copy(task))
-        Utilities.notify("prossima volta "+ task.nextTime)
+        Utility.notify("prossima volta "+ task.nextTime)
         }
         //recupero i tasks da firebase
         Activity.retrieveTasks(ref,taskCback)

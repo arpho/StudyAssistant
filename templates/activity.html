@@ -9,7 +9,7 @@
 
 
             </span>
-            <ion-item>
+            <ion-item ng-click="view(activity.key)">
             <div class="item item-avatar item-text-wrap">
 
 
@@ -19,7 +19,6 @@
                 <br> <strong>prossima ripetizione: </strong>{{activity.nextTime}}
                 <br> <strong>Ripetizioni:</strong> {{activity.rep}}
                 <button class="button button-fab   button-balanced-900"ng-click="done(activity.key)"><i class="icon ion-ios-checkmark"></i></button>
-                <button class="button button-fab   button-calm-900" ng-click="view(activity.key)"><i class="icon ion-edit"></i></button>
                 <button class="button button-fab  button-assertive-900" ng-click="deleteTask(activity.key)"><i class="icon ion-trash-a"></i></button>
 
             </div>

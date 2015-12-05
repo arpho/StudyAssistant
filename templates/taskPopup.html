@@ -18,8 +18,9 @@
         </label>
 		<label class ="item">Date Ripassi</label>
 		<ion-list>
-		<ion-item ng-repeat="rep in task.history">
+		<ion-item ng-repeat="rep in task.history track by $index">
 		<p> {{rep}}</p>
+          </ion-item>
 		</ion-list>
 		</label>
         <label class="item">

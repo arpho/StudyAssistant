@@ -42,8 +42,7 @@ angular.module('studyAssistant.services')
  }
 
 
- this.updateTask = function(ref,task){
-    var key = task.key
+ this.updateTask = function(ref,key,task){
     //rimuovo il campo key
     delete task.key
     ref.child('tasks').child(User.getUid()).child(key).set(task)
