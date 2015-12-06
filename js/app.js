@@ -119,15 +119,26 @@ angular.module('studyAssistant', ['ionic', 'studyAssistant.controllers','studyAs
         url: '/login',
         views: {
             'menuContent': {
-                templateUrl: 'templates/login.html',
-                controller: 'LoginCtrl'
+                templateUrl: 'templates/login.html'
+                ,controller: 'LoginCtrl'
             },
             'fabContent': {
                 template: ''
             }
         }
     })
-
+    .state('app.signup',{
+        url:'/signup',
+        views:{
+            'menuContent':{
+                templateUrl:'templates/signup.html'
+                ,controller:'SignupController'
+            }
+            ,'fabContent': {
+                             template: ''
+                         }
+        }
+    })
     .state('app.profile', {
         url: '/profile',
         views: {

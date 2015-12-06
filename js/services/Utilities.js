@@ -87,14 +87,16 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
             ,hide = function() {
                 $ionicLoading.hide();
             }
+            ,validateEmail = function (email) {
+                var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+                return re.test(email);
+            }
             ,notify = function(text) {
         var myPopup = popup.alert({title:text,okText:'Ok'})
-        myPopup.then(function(res) {
-    console.log('Tapped!', res);
-  });
+
   $timeout(function(){
             myPopup.close()
-      },1500)
+      },3500)
     }
     /*apre un popup di conferma
     @param string titolo del popup
@@ -164,6 +166,7 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
         return {
                     'show':show
                     ,'hide':hide
+                    ,'validateEmail':validateEmail
                     ,'notify':notify
                     ,'getAuth':getAuth
                     ,'formatDate': formatDate

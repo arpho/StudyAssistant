@@ -3,9 +3,13 @@
 
 angular.module('studyAssistant.controllers', [])
 
-.controller('AppCtrl', ['$scope', '$ionicModal', '$ionicPopover', '$timeout','Utility','$ionicActionSheet','$rootScope','$state',function($scope, $ionicModal, $ionicPopover, $timeout,Utility,$ionicActionSheet,$rootScope,$state) {
+.controller('AppCtrl', ['$scope', '$ionicModal', '$ionicPopover', '$timeout','Utility','$ionicActionSheet','$rootScope','$state','onLineStatus',function($scope, $ionicModal, $ionicPopover, $timeout,Utility,$ionicActionSheet,$rootScope,$state,onLineStatus) {
     // Form data for the login modal
     $scope.loginData = {};
+    $scope.onlineStatus = onLineStatus;
+    $scope.$watch('onlineStatus.isOnline()', function(online){
+        if(!online) Utility.notify('controlla la tua connessione!')
+    })
     $scope.isExpanded = false;
     $scope.hasHeaderFabLeft = false;
     $scope.hasHeaderFabRight = false;

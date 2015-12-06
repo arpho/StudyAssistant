@@ -1,6 +1,7 @@
 angular.module('studyAssistant.services', [])
 .service('User', [ 'Utility',function(Utility) {
     var user = {};
+    user.logged
     var baseUrl = 'https://studywod.firebaseio.com//'; //TODO da eliminare
     var auth = Utility.getAuth();
     this.setUsername = function(username){
@@ -40,6 +41,10 @@ angular.module('studyAssistant.services', [])
                    }
     this.setUid = function(uid){
     user.uid = uid
+    }
+
+    this.createUser = function(email,password,cback){
+        auth.createUser({'email':email,'password':password},cback)
     }
 
     this.getUid = function(){
