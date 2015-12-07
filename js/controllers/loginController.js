@@ -7,7 +7,7 @@ angular.module('studyAssistant.controllers')
     $scope.loginData = {} //l'utente non vuole che vengano ricordate le credenziali, ma se precedentemente le ricordava,queste potrebbero essere presenti sul sistema
     $scope.doLogin = function(){
     if (!$scope.loginData.email || !$scope.loginData.password)
-        console.log('inserisci password e email')
+        Utilities.notify('inserisci password e email')
     else {
            console.log($scope.loginData)
            var loginCback = function(){

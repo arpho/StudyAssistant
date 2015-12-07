@@ -52,6 +52,33 @@ angular.module('studyAssistant.controllers')
         //recupero i tasks da firebase
         Activity.retrieveTasks(ref,taskCback)
     }
+    $scope.itemBackground = function(key){
+        var today = Utility.formatDate(new Date())
+        var task = Utility.retrieveTask(key,Activity.getTasks(normalizer))
+        if (task.lastTime==today)
+            return 'balanced-bg'
+        else
+            return 'stable-bg'
+    }
+    /*sembra ci sia un baco in ng-class che non lavora bene quando nello stesso oggetto c'è un campo class
+    @param classi costanti nell'oggetto
+    @param chiave del task
+    @return classi costanti + la classe variabile
+    */
+    $scope.itemClass = function(constClass,key){
+        return constClass +" "+ $scope.itemBackground(key)
+    }
+
+
+    $scope.getIcon = function(key){
+        var task = Utility.retrieveTask(key,Activity.getTasks(normalizer))
+        var out= 'img/task.jpg'
+        ,today = Utility.formatDate(new Date())
+        if(task.lastTime==today)
+            out = 'img/task_done.jpg'
+
+        return out
+    }
 
     $scope.deleteTask = function(key){
         var task = Utility.retrieveTask(key,Activity.getTasks(normalizer))

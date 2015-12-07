@@ -2,15 +2,12 @@
 <ion-view view-title="Activity">
     <ion-content ng-class="{expanded:isExpanded}"   >
         <ion-list can-swipe="true">
-        <div class="ion-item item-remove-animate card-item card stable-bg ink ink-dark  "  ng-repeat="activity in activities|filter:customFilter">
-            <span class="avatar" style="background-image: url('img/task.jpg');">
-                <button  ng-click="newTask()" class="button button-fab button-fab-top-right expanded button-energized-900 flap"><i class="icon ion-plus"></i></button>
+        <div class="{{itemClass('ion-item item-remove-animate card-item card  ink ink-dark  ',activity.key)}}" ng-class="{{itemBackground(activity.key)}} " ng-repeat="activity in activities|filter:customFilter">
 
-
-
-            </span>
             <ion-item ng-click="view(activity.key)">
-            <div class="item item-avatar item-text-wrap">
+
+                <ion-option-button class="button    button-balanced-900"ng-click="done(activity.key)"><i class="icon ion-ios-checkmark"></i></ion-option-button>
+                <ion-option-button class="button  button-assertive-900" ng-click="deleteTask(activity.key)"><i class="icon ion-trash-a"></i></ion-option-button>
 
 
                 <strong>Task: </strong>{{activity.activity}}
@@ -18,10 +15,6 @@
                 <br><strong>ultima ripetizione: </strong>{{activity.lastTime}}
                 <br> <strong>prossima ripetizione: </strong>{{activity.nextTime}}
                 <br> <strong>Ripetizioni:</strong> {{activity.rep}}
-                <button class="button button-fab   button-balanced-900"ng-click="done(activity.key)"><i class="icon ion-ios-checkmark"></i></button>
-                <button class="button button-fab  button-assertive-900" ng-click="deleteTask(activity.key)"><i class="icon ion-trash-a"></i></button>
-
-            </div>
 
             </ion-item>
             </div>
