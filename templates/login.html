@@ -14,15 +14,17 @@
             <input type="checkbox"  placeholder="ricorda" ng-model="loginData.rememberCredentials" />
             </form>
         </div>
-        <div class="padding">
-            <button  class="button button-full button-assertive ink"  ng-click="doLogin()">Login</button>
-            <button   ui-sref="app.signup" class="button button-full button-royal ink"  >Registrati</button>
-        </div>
 
-        <div class="button-bar social-login">
+        <!--div class="button-bar social-login">
             <button class="button button-small button-border icon-left ion-social-google button-assertive-900">Google+</button>
             <button class="button button-small button-border icon-left ion-social-twitter button-calm-900">Twitter</button>
             <button class="button button-small button-border icon-left ion-social-facebook button-positive-900">Facebook</button>
+        </div-->
+        <div class="padding">
+            <button  class="button button-full button-dark ink"  ng-click="doLogin()">Login</button>
+            <button   ui-sref="app.signup" class="button button-full button-royal ink"  >Registrati</button>
         </div>
+
+
     </ion-content>
 </ion-view>
