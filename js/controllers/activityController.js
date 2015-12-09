@@ -39,15 +39,28 @@ angular.module('studyAssistant.controllers')
 
             Utility.showModal('templates/taskPopup.html','slide-in-up',$scope)
         }
+        var applyDone= function(task,today){
+            task.lastTime = today
+                        task.rep++
+                        task.history.push(today)
+                        task.nextTime = Utility.formatDate(Utility.addDays(new Date(),Activity.getDays(task.rep)))
+                        Activity.updateTask(ref,angular.copy(task))
+                        Utility.notify("prossima volta "+ task.nextTime)
+        }
+
         $scope.done = function(key){
         var today = Utility.formatDate(new Date())
         var task = Utility.retrieveTask(key,Activity.getTasks(normalizer))
-        task.lastTime = today
-        task.rep++
-        task.history.push(today)
-        task.nextTime = Utility.formatDate(Utility.addDays(new Date(),Activity.getDays(task.rep)))
-        Activity.updateTask(ref,angular.copy(task))
-        Utility.notify("prossima volta "+ task.nextTime)
+        if(task.nextTime==today){
+            applyDone(task,today)
+        }
+        else{
+        Utility.confirmPopup('Attenzione '+task.activity+'?'
+                ,'questa attività non è prevista per oggi, vuoi segnarla come fatta comunque??'
+                ,function(){applyDone(task,today)}
+                ,function(){console.log('no non vuole')})
+
+        }
         }
         //recupero i tasks da firebase
         Activity.retrieveTasks(ref,taskCback)
