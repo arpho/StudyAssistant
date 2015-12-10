@@ -30,10 +30,9 @@ angular.module('studyAssistant.controllers')
             $scope.task = task
             $scope.action = 'Modifica'
             $scope.doAction = function(){
-            delete task.key
                 task = angular.copy(task) //rimuovo i campi di ng-repeat
                 var ref = Utility.getAuth()
-                Activity.updateTask(ref,key,task)
+                Activity.updateTask(ref,task)
             $scope.closeModal()
             }
 
