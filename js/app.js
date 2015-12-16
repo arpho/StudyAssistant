@@ -65,8 +65,6 @@ angular.module('studyAssistant', ['ionic', 'studyAssistant.controllers','studyAs
                         console.log('creato task',$scope.task)
                         var ref = Utility.getAuth()
                         var cback = function(){
-                            console.log('creato task success param')
-                            console.log('creato task error')
                             $scope.closeModal()// chiude il popup
                         }
                         Activity.createTask(ref,$scope.task,cback)

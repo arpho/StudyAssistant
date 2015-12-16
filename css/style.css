@@ -55,6 +55,8 @@ p {
     -webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
 }
+.input-label{
+color:#000;}
 
 .menu-open .ion-navicon:before {
     content: "\f2ca";

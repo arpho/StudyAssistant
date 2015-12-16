@@ -2,6 +2,7 @@ angular.module('studyAssistant.controllers')
 .controller('ActivityCtrl', ['Utility','User','Activity','$scope','$timeout','ionicMaterialMotion', 'ionicMaterialInk','$state','$ionicActionSheet','Recall',function(Utility,User,Activity,$scope, /*$stateParams,*/ $timeout, ionicMaterialMotion, ionicMaterialInk,$state,$ionicActionSheet,Recall) {
   /*  $scope.$parent.showHeader();
     $scope.$parent.clearFabs();*/
+    $scope.recall
     if(!User.isLogged()){ // utente non loggato
         console.log('utente non loggato')
         $state.go('app.login')
@@ -25,10 +26,23 @@ angular.module('studyAssistant.controllers')
             //console.log('lista tasks ',$scope.activities)
 
            }
-        $scope.addRecall = function()
+        $scope.keypress = function(e){
+        console.log('keypresson button',e,$scope.task.recall)
+        }
+        $scope.noRecalls = function(task){
+             return task.recalls.length == 0
+        }
+
+        $scope.deleteRecall = function(id){
+            console.log('delete recall',id)
+            delete $scope.task.recalls[id]
+        }
+        $scope.addRecall = function(e)
         {
-        console.log('adding recall')
-        var param = {
+        console.log("adding recall",$scope.task.recall)
+
+        $scope.task.recalls.push({recall:$scope.task.recall})
+        /*var param = {
                          template: '<input type="text" ng-model="recall">'
                          ,title: 'inserisci il recall'
                          ,subTitle: 'conviene che  sia semplice'
@@ -48,22 +62,24 @@ angular.module('studyAssistant.controllers')
                                         }
 
                          ]
-                    }
-        Utility.showPopup(param)
+                    }*/
+        //Utility.showPopup(param)
         }
         $scope.view = function(key){
             var task = Utility.retrieveTask(key,Activity.getTasks(normalizer))
             ,ref = Utility.getAuth()
+            task.recalls =
             $scope.task = task
             var recallCback = function(data){
-            task.recalls = data.val()
+            task.recalls = data.val()|| []
             }
             // carico i recalls del task
             Recall.getRecalls(ref,task.key,recallCback)
             $scope.action = 'Modifica'
             $scope.doAction = function(){
+                console.log("doAction update")
                 task = angular.copy(task) //rimuovo i campi di ng-repeat
-                Activity.updateTask(ref,task)
+                Activity.updateTask(ref,angular.copy(task))
                 $scope.closeModal()
             }
 
