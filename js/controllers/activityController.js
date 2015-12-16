@@ -1,5 +1,5 @@
 angular.module('studyAssistant.controllers')
-.controller('ActivityCtrl', ['Utility','User','Activity','$scope','$timeout','ionicMaterialMotion', 'ionicMaterialInk','$state','$ionicActionSheet',function(Utility,User,Activity,$scope, /*$stateParams,*/ $timeout, ionicMaterialMotion, ionicMaterialInk,$state,$ionicActionSheet) {
+.controller('ActivityCtrl', ['Utility','User','Activity','$scope','$timeout','ionicMaterialMotion', 'ionicMaterialInk','$state','$ionicActionSheet','Recall',function(Utility,User,Activity,$scope, /*$stateParams,*/ $timeout, ionicMaterialMotion, ionicMaterialInk,$state,$ionicActionSheet,Recall) {
   /*  $scope.$parent.showHeader();
     $scope.$parent.clearFabs();*/
     if(!User.isLogged()){ // utente non loggato
@@ -25,15 +25,46 @@ angular.module('studyAssistant.controllers')
             //console.log('lista tasks ',$scope.activities)
 
            }
+        $scope.addRecall = function()
+        {
+        console.log('adding recall')
+        var param = {
+                         template: '<input type="text" ng-model="recall">'
+                         ,title: 'inserisci il recall'
+                         ,subTitle: 'conviene che  sia semplice'
+                         ,scope: $scope
+                         , buttons:[
+                                        {text:'Canc'}
+                                        ,{
+                                            text: 'add'
+                                            ,type:'button-positive'
+                                            ,onTap:function(e){
+                                            if(!$scope.recall)
+                                                e.preventDefault()
+                                            else{
+                                            console.log('recall',$scope.recall)
+                                            }
+                                            }
+                                        }
+
+                         ]
+                    }
+        Utility.showPopup(param)
+        }
         $scope.view = function(key){
             var task = Utility.retrieveTask(key,Activity.getTasks(normalizer))
+            ,ref = Utility.getAuth()
             $scope.task = task
+            var recallCback = function(data){
+            task.recalls = data.val()
+            }
+            // carico i recalls del task
+            Recall.getRecalls(ref,task.key,recallCback)
             $scope.action = 'Modifica'
             $scope.doAction = function(){
                 task = angular.copy(task) //rimuovo i campi di ng-repeat
-                var ref = Utility.getAuth()
                 Activity.updateTask(ref,task)
-            $scope.closeModal()
+                $scope.closeModal()
             }
 
             Utility.showModal('templates/taskPopup.html','slide-in-up',$scope)

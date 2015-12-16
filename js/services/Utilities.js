@@ -98,13 +98,17 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
             myPopup.close()
       },3500)
     }
+    /* apre un popup generico
+    @param parametri per un popup custom complesso*/
+    ,showPopup = function(param){
+    popup.show(param)}
     /*apre un popup di conferma
     @param string titolo del popup
     @param string messaggio del popup
     @param function funzione per conferma
     @param function funzione annulla*/
     , confirmPopup = function(titolo,msg,confirmFunction,cancelFunction){
-        confirmPopup =popup.confirm({title:titolo,template:msg})
+        confirmPopup = popup.confirm({title:titolo,template:msg})
         confirmPopup.then(function(res){
             if( res) confirmFunction()
                 else cancelFunction()
@@ -181,6 +185,7 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
                     ,'getLocalValue':getLocalValue
                     ,'addObj':addObj
                     ,'confirmPopup':confirmPopup
+                    ,'showPopup':showPopup
                     ,'counter': counter
                     ,'retrieveTask':retrieveTask
                     ,'showModal':showModal
