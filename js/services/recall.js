@@ -16,6 +16,6 @@ crea,aggiorna i recalls di un task
 @param funzione invocata all'avvenuta sincronizzazione con firebase, alla funzione è passato un oggwetto errorObject in caso di errore, altrimenti null
 */
     this.createUpdate = function(ref,taskKey,recalls,cback){
-        ref.child('recalls').child(taskKey).set(recall,cback)
+        ref.child('recalls').child(taskKey).set(recalls,cback)
     }
 }])

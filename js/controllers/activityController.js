@@ -3,6 +3,7 @@ angular.module('studyAssistant.controllers')
   /*  $scope.$parent.showHeader();
     $scope.$parent.clearFabs();*/
     $scope.recall
+
     if(!User.isLogged()){ // utente non loggato
         console.log('utente non loggato')
         $state.go('app.login')
@@ -26,22 +27,21 @@ angular.module('studyAssistant.controllers')
             //console.log('lista tasks ',$scope.activities)
 
            }
-        $scope.keypress = function(e){
-        console.log('keypresson button',e,$scope.task.recall)
-        }
-        $scope.noRecalls = function(task){
-             return task.recalls.length == 0
-        }
 
         $scope.deleteRecall = function(id){
             console.log('delete recall',id)
             delete $scope.task.recalls[id]
+            if($scope.task.recalls.length ==0)
+            $scope.subTitleRecalls = " non sono stati definiti recalls"
+            else
+                $scope.subTitleRecalls = ""
         }
         $scope.addRecall = function(e)
         {
         console.log("adding recall",$scope.task.recall)
 
         $scope.task.recalls.push({recall:$scope.task.recall})
+        $scope.subTitleRecalls = "" // di sucuro c'è almeno un recall
         /*var param = {
                          template: '<input type="text" ng-model="recall">'
                          ,title: 'inserisci il recall'
@@ -68,18 +68,29 @@ angular.module('studyAssistant.controllers')
         $scope.view = function(key){
             var task = Utility.retrieveTask(key,Activity.getTasks(normalizer))
             ,ref = Utility.getAuth()
-            task.recalls =
             $scope.task = task
+            $scope.task.recall = '' // azzero il recall
             var recallCback = function(data){
-            task.recalls = data.val()|| []
+
+            $scope.task.recalls = data.val()|| []
+            if($scope.task.recalls.length ==0)
+                $scope.subTitleRecalls = " non sono stati definiti recalls"
             }
             // carico i recalls del task
             Recall.getRecalls(ref,task.key,recallCback)
             $scope.action = 'Modifica'
             $scope.doAction = function(){
                 console.log("doAction update")
-                task = angular.copy(task) //rimuovo i campi di ng-repeat
-                Activity.updateTask(ref,angular.copy(task))
+                task = angular.copy($scope.task) //rimuovo i campi di ng-repeat
+                // rimuovo i campi recalls  che verranno salvati in un'altra posizione
+                var recalls = $scope.task.recalls
+                if (recalls ){
+                    Recall.createUpdate(ref,$scope.task.key,recalls,function(){
+                        console.log('inseriti i recalls')
+                    })
+
+                }
+                Activity.updateTask(ref,angular.copy($scope.task))
                 $scope.closeModal()
             }
 
@@ -119,6 +130,14 @@ angular.module('studyAssistant.controllers')
         else
             return 'stable-bg'
     }
+
+    $scope.moveItem = function(item, fromIndex, toIndex) {
+        //Move the item in the array
+        $scope.task.recalls.splice(fromIndex, 1); //cancello l'oggetto dalla posizione di partenza
+        $scope.task.recalls.splice(toIndex, 1, item); //inserisco l'oggetto nella posizione di arrivo
+        console.log("move",$scope.task.recalls, item)
+      }
+
     /*sembra ci sia un baco in ng-class che non lavora bene quando nello stesso oggetto c'è un campo class
     @param classi costanti nell'oggetto
     @param chiave del task
@@ -127,7 +146,30 @@ angular.module('studyAssistant.controllers')
     $scope.itemClass = function(constClass,key){
         return constClass +" "+ $scope.itemBackground(key)
     }
+    $scope.viewRecall = function(recall,index){
+    $scope.updatedRecall = recall
+    var param = {
+                             template: '<input type="text" ng-model="updatedRecall">'
+                             ,title: 'modifica '
+                             ,scope: $scope
+                             , buttons:[
+                                            {text:'ann'}
+                                            ,{
+                                                text: 'modifica'
+                                                ,type:'button-positive'
+                                                ,onTap:function(e){
+                                                //if(!$scope.updatedRecall)
+                                                  //  e.preventDefault()
+                                                //else{
+                                                console.log('recall',$scope.updatedRecall)
 
+                                                }
+                                            }
+
+                             ]
+                        }
+            Utility.showPopup(param)
+    }
 
     $scope.getIcon = function(key){
         var task = Utility.retrieveTask(key,Activity.getTasks(normalizer))
