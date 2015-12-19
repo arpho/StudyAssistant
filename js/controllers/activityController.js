@@ -27,7 +27,6 @@ angular.module('studyAssistant.controllers')
             //console.log('lista tasks ',$scope.activities)
 
            }
-
         $scope.deleteRecall = function(id){
             console.log('delete recall',id)
             delete $scope.task.recalls[id]
@@ -134,11 +133,12 @@ angular.module('studyAssistant.controllers')
     $scope.moveItem = function(item, fromIndex, toIndex) {
         //Move the item in the array
         $scope.task.recalls.splice(fromIndex, 1); //cancello l'oggetto dalla posizione di partenza
-        $scope.task.recalls.splice(toIndex, 1, item); //inserisco l'oggetto nella posizione di arrivo
+        $scope.task.recalls.splice(toIndex, 0, item); //inserisco l'oggetto nella posizione di arrivo
         console.log("move",$scope.task.recalls, item)
       }
 
     /*sembra ci sia un baco in ng-class che non lavora bene quando nello stesso oggetto c'è un campo class
+    quindi implemento il mio ngClass
     @param classi costanti nell'oggetto
     @param chiave del task
     @return classi costanti + la classe variabile
@@ -147,7 +147,7 @@ angular.module('studyAssistant.controllers')
         return constClass +" "+ $scope.itemBackground(key)
     }
     $scope.viewRecall = function(recall,index){
-    $scope.updatedRecall = recall
+    //$scope.updatedRecall = recall
     var param = {
                              template: '<input type="text" ng-model="updatedRecall">'
                              ,title: 'modifica '
