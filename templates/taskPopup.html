@@ -21,13 +21,15 @@
 
           <input  placeholder="nuovo recall" style =".input-label{
 color:#000;}" ng-keyPress=" keypress($event)" highlight-color="balanced" type="text" ng-model="task.recall" />
-            <i class=" ion-plus-circled" ng-click="addRecall()"></i>
+          <button class=" button button-fab  energized  " ng-click="addRecall()"><i class="icon ion-plus"></i></button>
           <p >{{subTitleRecalls}} </p>
           <ion-list can-swipe="true" show-delete="true" show-reorder="true">
             <ion-item ng-repeat="recall in task.recalls track by $index">
-              <p > {{recall.recall}}</p>
+              <p > {{+recall.recall}}
+              </p>
               <ion-delete-button class="ion-minus-circled"
                                  ng-click="task.recalls.splice($index, 1)">
+
               </ion-delete-button>
               <ion-reorder-button class="ion-navicon"
                                   on-reorder="moveItem(recall, $fromIndex, $toIndex)">

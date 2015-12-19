@@ -38,9 +38,15 @@ angular.module('studyAssistant.controllers')
         $scope.addRecall = function(e)
         {
         console.log("adding recall",$scope.task.recall)
-
-        $scope.task.recalls.push({recall:$scope.task.recall})
-        $scope.subTitleRecalls = "" // di sucuro c'è almeno un recall
+        if ($scope.task.recall && $scope.task.recall!="nuovo recall")// aggiungo un recall solo se ho scritto qualcosa
+        {
+            $scope.task.recalls.push({recall:$scope.task.recall})
+            $scope.subTitleRecalls = "" // di sicuro c'è almeno un recall
+            $scope.task.recall = "nuovo recall"
+        }
+        else{
+        Utility.notify("inserisci un recall!!")
+        }
         /*var param = {
                          template: '<input type="text" ng-model="recall">'
                          ,title: 'inserisci il recall'
