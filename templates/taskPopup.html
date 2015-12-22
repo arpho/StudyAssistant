@@ -25,12 +25,12 @@ color:#000;}" ng-keyPress=" keypress($event)" highlight-color="balanced" type="t
           <p >{{subTitleRecalls}} </p>
           <ion-list can-swipe="true" show-delete="true" show-reorder="true">
             <ion-item ng-repeat="recall in task.recalls track by $index">
-              <p > {{+recall.recall}}
-              </p>
               <ion-delete-button class="ion-minus-circled"
                                  ng-click="task.recalls.splice($index, 1)">
 
               </ion-delete-button>
+              <div id="recallData" style="position:relative;left:3em;"><p > {{+recall.recall}}
+              </p></div>
               <ion-reorder-button class="ion-navicon"
                                   on-reorder="moveItem(recall, $fromIndex, $toIndex)">
               </ion-reorder-button>

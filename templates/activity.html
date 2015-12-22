@@ -9,13 +9,15 @@
                 <ion-option-button class="button    button-balanced-900"ng-click="done(activity.key)"><i class="icon ion-ios-checkmark"></i></ion-option-button>
                 <ion-option-button class="button  button-assertive-900" ng-click="deleteTask(activity.key)"><i class="icon ion-trash-a"></i></ion-option-button>
 
+                <button class="icon ion-chevron-left icon-accessory after"></button>
 
-                <strong>Task: </strong>{{activity.activity}}
-                <br><strong>Nota: </strong> {{activity.nota}}
-                <br><strong>ultima ripetizione: </strong>{{activity.lastTime}}
-                <br> <strong>prossima ripetizione: </strong>{{activity.nextTime}}
-                <br> <strong>Ripetizioni:</strong> {{activity.rep}}
-
+                <div id="taskItem" style="position:relative;top:-1em;left:2em">
+                     <strong>Task: </strong>{{activity.activity}}
+                    <br> <strong>Nota: </strong> {{activity.nota}}
+                    <br> <strong>ultima ripetizione: </strong>{{activity.lastTime}}
+                    <br>  <strong>prossima ripetizione: </strong>{{activity.nextTime}}
+                    <br>  <strong>Ripetizioni:</strong> {{activity.rep}}
+                </div>
             </ion-item>
             </div>
 
