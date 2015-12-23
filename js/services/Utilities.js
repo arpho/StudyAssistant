@@ -16,6 +16,7 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
     filterTitle[0] = 'WOD: work of day'
     filterTitle[1] = 'WOT: work of tomorrow'
     filterTitle[2] = 'ALL: tutte le attività inserite'
+    filterTitle[3] = 'OLD: attività scadute'
 
 
     //variabile usata per evitare le ripetizioni
@@ -43,6 +44,16 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
     */
     , getLocalValue = function(key,defaultValue){
         return $window.localStorage[key] ||defaultValue
+    }
+    /*
+     la data generata da formatDate è sbagliata per retrocompatibilità questa funzione corregge la data invertendo la posizione del giorno con quella del mese
+     @param STring data nel formato gg/mm/yyyy
+     @return  string data nel formato mm/gg/yyyy
+    */
+    ,fixDate = function(value){
+        var splitData = value.split('/')
+        return splitData[1]+'/'+splitData[0]+'/'+splitData[2]
+
     }
     ,show = function(text) {
             var loading = $ionicLoading.show({
@@ -189,6 +200,7 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
                     ,'counter': counter
                     ,'retrieveTask':retrieveTask
                     ,'showModal':showModal
+                    ,'fixDate':fixDate
                 };
 
 }]

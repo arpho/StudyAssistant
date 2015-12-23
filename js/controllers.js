@@ -26,13 +26,15 @@ angular.module('studyAssistant.controllers', [])
                                               {text:Utility.getFilterTitle(0)}
                                               ,{text:Utility.getFilterTitle(1)}
                                               ,{text:Utility.getFilterTitle(2)}
+                                              ,{text:Utility.getFilterTitle(3)}
                                           ]
                                           ,buttonClicked:function(index){
                                               console.log('scelto:',index);
-                                              var filterName =[]
+                                              var filterName = []
                                               filterName[0] = Utility.getFilterTitle(0)
                                               filterName[1] = Utility.getFilterTitle(1)
                                               filterName[2] = Utility.getFilterTitle(2)
+                                              filterName[3] = Utility.getFilterTitle(3)
                                               //console.log('filterParam',$scope.filterParam)
 //                                              Utility.setActiveFilter(index)
                                               $rootScope.$broadcast('settedFilter',index) // propago il segnale a tutti gli scope così che activityController sia informato

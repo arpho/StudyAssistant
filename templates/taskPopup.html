@@ -20,7 +20,7 @@
           <h3 class ="item">Recalls</h3>
 
           <input  placeholder="nuovo recall" style =".input-label{
-color:#000;}" ng-keyPress=" keypress($event)" highlight-color="balanced" type="text" ng-model="task.recall" />
+color:#000;}" ng-click="task.recall=''"highlight-color="balanced" type="text" ng-model="task.recall" />
           <button class=" button button-fab  energized  " ng-click="addRecall()"><i class="icon ion-plus"></i></button>
           <p >{{subTitleRecalls}} </p>
           <ion-list can-swipe="true" show-delete="true" show-reorder="true">

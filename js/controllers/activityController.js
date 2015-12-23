@@ -92,6 +92,7 @@ angular.module('studyAssistant.controllers')
                 if (recalls ){
                     Recall.createUpdate(ref,$scope.task.key,recalls,function(){
                         console.log('inseriti i recalls')
+                        $scope.task.recalls = [] // cancello i recalls per risparmiare spazio e banda su firebase
                     })
 
                 }
@@ -213,7 +214,13 @@ angular.module('studyAssistant.controllers')
     filter[2] = function(value){
         return value // li ritorno tutti
     }
-    if (filter[$scope.activeFilter])// se ilfiltro è definito applico il filtro, altrimenti ritorno il task
+    filter[3] = function(value){
+        var out
+        if (new Date()> new Date(Utility.fixDate(value.nextTime)))
+            out = value
+        return out
+    }
+    if (filter[$scope.activeFilter])// se il filtro è definito applico il filtro, altrimenti ritorno il task
        {
         out = filter[$scope.activeFilter](value)
        }
