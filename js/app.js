@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('studyAssistant', ['ionic', 'studyAssistant.controllers','studyAssistant.services','firebase', 'ionic-material', 'ionMdInput'])
+angular.module('studyAssistant', ['ionic', 'studyAssistant.controllers','studyAssistant.services','studyAssistant.directives','firebase', 'ionic-material', 'ionMdInput'])
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -142,6 +142,23 @@ angular.module('studyAssistant', ['ionic', 'studyAssistant.controllers','studyAs
         views: {
             'menuContent': {
                 templateUrl: 'templates/profile.html',
+                controller: 'ProfileCtrl'
+            },
+            'fabContent': {
+                template: '<button id="fab-profile" class="button button-fab button-fab-bottom-right button-energized-900"><i class="icon ion-plus"></i></button>',
+                controller: function ($timeout) {
+                    /*$timeout(function () {
+                        document.getElementById('fab-profile').classList.toggle('on');
+                    }, 800);*/
+                }
+            }
+        }
+    })
+    .state('app.scheduling', {
+        url: '/scheduling',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/scheduling.html',
                 controller: 'ProfileCtrl'
             },
             'fabContent': {
