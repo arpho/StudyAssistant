@@ -10,14 +10,33 @@ angular.module('studyAssistant.directives', [])
     template:'<div class="dhx_cal_navline" ng-transclude></div><div class="dhx_cal_header"></div><div class="dhx_cal_data"></div>',
 
     link:function ($scope, $element, $attrs, $controller){
-      //adjust size of a scheduler
-      $scope.$watch(function() {
-        return $element[0].offsetWidth + "." + $element[0].offsetHeight;
-      }, function() {
-        scheduler.config.first_hour = 8;
-        scheduler.config.last_hour = 18;
-        scheduler.setCurrentView();
-      });
+     //default state of the scheduler
+       if (!$scope.scheduler)
+         $scope.scheduler = {};
+         $scope.scheduler.mode = $scope.scheduler.mode || "week";
+         $scope.scheduler.date = $scope.scheduler.date || new Date();
+         //watch data collection, reload on changes
+           $scope.$watch($attrs.data, function(collection){
+             scheduler.clearAll();
+             scheduler.parse(collection, "json");
+           }, true);
+
+           //watch mode and date
+           $scope.$watch(function(){
+             return $scope.scheduler.mode + $scope.scheduler.date.toString();
+           }, function(nv, ov) {
+             var mode = scheduler.getState();
+             if (nv.date != mode.date || nv.mode != mode.mode)
+               scheduler.setCurrentView($scope.scheduler.date, $scope.scheduler.mode);
+           }, true);
+
+           //size of scheduler
+           $scope.$watch(function() {
+             return $element[0].offsetWidth + "." + $element[0].offsetHeight;
+           }, function() {
+             scheduler.setCurrentView();
+           });
+
 
       //styling for dhtmlx scheduler
       $element.addClass("dhx_scheduler");
