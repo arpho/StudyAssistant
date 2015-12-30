@@ -2,7 +2,7 @@
     <ion-content ng-class="{expanded:$scope.isExpanded}">
             <div class="content">
 
-                <div dhx-scheduler style="height:350px; width:600px;">
+                <div dhx-scheduler data="events | filter:search"  style="height:350px; width:600px;position:relative;top:2em;">
                     <div class="dhx_cal_prev_button">&nbsp;</div>
                     <div class="dhx_cal_next_button">&nbsp;</div>
                     <div class="dhx_cal_today_button"></div>

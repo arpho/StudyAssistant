@@ -17,6 +17,7 @@ angular.module('studyAssistant.directives', [])
          $scope.scheduler.date = $scope.scheduler.date || new Date();
          //watch data collection, reload on changes
            $scope.$watch($attrs.data, function(collection){
+             $scope.modified = true;
              scheduler.clearAll();
              scheduler.parse(collection, "json");
            }, true);
