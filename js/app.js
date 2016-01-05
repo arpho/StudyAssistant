@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('studyAssistant', ['ionic', 'studyAssistant.controllers','studyAssistant.services','studyAssistant.directives','firebase', 'ionic-material', 'ionMdInput'])
+angular.module('studyAssistant', ['ionic', 'studyAssistant.controllers','studyAssistant.services','studyAssistant.directives','firebase', 'ionic-material', 'ionMdInput','ng-mfb'])
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -46,12 +46,16 @@ angular.module('studyAssistant', ['ionic', 'studyAssistant.controllers','studyAs
                 controller: 'ActivityCtrl'
             }
             ,'fabContent': {
-                template: '<button id="fab-activity" ng-click="newTask()" class="button button-fab button-fab-top-right expanded button-energized-900 drop"><i class="icon ion-plus"></i></button>',
-                controller: function ($timeout,$scope,$ionicModal,Activity,Utility) {
+                template: '<button id="fab-activity" ng-click="newTask()" ng-show="showPlus()" class="button button-fab button-fab-top-right expanded button-energized-900 drop"><i class="icon ion-plus"></i></button>',
+                controller: function ($timeout,$scope,$ionicModal,Activity,Utility,$state) {
                     $timeout(function () {
                         document.getElementById('fab-activity').classList.toggle('on');
                     }, 200);
+                    $scope.showPlus = function(){
+                        return $state.current.name == 'app.activity'
+                    }
                     $scope.newTask = function(){
+                        console.log($state.current.name,$scope.showPlus())
                         $scope.task = {} // inserisco un nuovo task nello scope
                         $scope.action = 'Crea'// setto il testo del bottone sul popup
 
@@ -143,14 +147,6 @@ angular.module('studyAssistant', ['ionic', 'studyAssistant.controllers','studyAs
             'menuContent': {
                 templateUrl: 'templates/profile.html',
                 controller: 'ProfileCtrl'
-            },
-            'fabContent': {
-                template: '<button id="fab-profile" class="button button-fab button-fab-bottom-right button-energized-900"><i class="icon ion-plus"></i></button>',
-                controller: function ($timeout) {
-                    /*$timeout(function () {
-                        document.getElementById('fab-profile').classList.toggle('on');
-                    }, 800);*/
-                }
             }
         }
     })
@@ -159,10 +155,6 @@ angular.module('studyAssistant', ['ionic', 'studyAssistant.controllers','studyAs
         views: {
             'menuContent': {
                 templateUrl: 'templates/scheduling.html',
-                controller: 'schedulingController'
-            },
-            'fabContent': {
-                template: '<button id="fab-profile" ng-click="newEvent()" " class="button button-fab button-fab-bottom-right button-energized-900"><i class="icon ion-plus"></i></button>',
                 controller: 'schedulingController'
             }
         }

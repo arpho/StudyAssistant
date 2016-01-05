@@ -15,6 +15,11 @@ angular.module('studyAssistant.controllers')
                   start_date: new Date(2015,11, 28, 9, 0),
                   end_date: new Date(2015, 11, 30, 16, 0) }
               ];
-        $scope.newEvent = function(){console.log('new vent',Scheduling.getWeeksFirstDay(),Scheduling.getWeeksFirstDay(true))}
+        $scope.newEvent = function(){console.log('new event',Scheduling.getWeeksFirstDay(),Scheduling.getWeeksFirstDay(true))}
+        $scope.newScheduling = function() {
+            console.log('new scheduling')
+        }
+            console.log('novità')
+        }
      }
-}])
+])

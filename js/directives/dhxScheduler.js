@@ -44,6 +44,7 @@ angular.module('studyAssistant.directives', [])
 
       //init scheduler
       scheduler.init($element[0], new Date(), "week");
+      scheduler.config.first_hour = 8;
     }
   }
 })

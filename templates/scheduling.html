@@ -2,16 +2,23 @@
     <ion-content ng-class="{expanded:$scope.isExpanded}">
             <div class="content">
 
-                <div dhx-scheduler data="events | filter:search"  style="height:350px; width:600px;position:relative;top:2em;">
+
+                <div dhx-scheduler data="events | filter:search"  style="height:100em; width:full;position:relative;top:2em;">
                     <div class="dhx_cal_prev_button">&nbsp;</div>
                     <div class="dhx_cal_next_button">&nbsp;</div>
                     <div class="dhx_cal_today_button"></div>
-                    <div class="dhx_cal_date"></div>
+                    <div class="dhx_cal_date" style=""font-size="1em"></div>
                     <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
                     <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
                     <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
                     <div>
-            </div>
+                    </div>
+                </div>
+                <mfb-menu position="br" active-icon="ion-edit" resting-icon="ion-plus-round" effect="fountain" class="energized">
+                    <button mfb-button icon="ion-navicon-round" label ="Nuova Programmazione" ng-click ="newScheduling()"></button>
+                    <button mfb-button icon="ion-minus-round" label ="Nuovo Evento" ng-click="newEvent()"></button>
+                    </mfb-menu>
+                </div>
         <!--h4 class="content padding double-padding-x">Following</h4-->
     </ion-content>
 </ion-view>
