@@ -7,15 +7,27 @@ angular.module('studyAssistant.controllers')
             $state.go('app.login')
         }
      else{
+     /*
+     viene invocata dalla direttiva dhxscheduler per settare lo scheduler nel suo parent
+     */
+        $scope.setScheduler = function(scheduler){
+            $scope.scheduler = scheduler
+        }
         $scope.events = [
-                { id:1, text:"Task A-12458",
-                  start_date: new Date(2015, 11, 30, 9, 0),
-                  end_date: new Date(2015, 11, 30, 16, 0) },
+                /*{ id:1, text:"Task A-12458",
+                  start_date: new Date(2016, 1, 06, 9, 0),
+                  end_date: new Date(2016, 1, 06, 16, 0) },
                 { id:2, text:"Task A-83473",
                   start_date: new Date(2015,11, 28, 9, 0),
-                  end_date: new Date(2015, 11, 30, 16, 0) }
+                  end_date: new Date(2015, 11, 30, 16, 0) }*/
               ];
-        $scope.newEvent = function(){console.log('new event',Scheduling.getWeeksFirstDay(),Scheduling.getWeeksFirstDay(true))}
+        $scope.saveScheduling = function(){
+          console.log('eventi', $scope.scheduler.getEvents(),Scheduling.normalizeEvents($scope.scheduler.getEvents()))
+        }
+        $scope.newEvent = function(){
+           var id = $scope.scheduler.addEventNow();
+            console.log('id',id)
+        }
         $scope.newScheduling = function() {
             console.log('new scheduling')
         }

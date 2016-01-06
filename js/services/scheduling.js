@@ -18,6 +18,28 @@ crea,aggiorna gli scheling  di un utente
     this.Upsert = function(ref,userKey,scheduling,cback){
         ref.child('scheduling').child(userKey).set(scheduling,cback)
     }
+
+    /*normalizza una lista di eventi
+     trasforma la lista di eventi ritornatada dhxscheduler
+     nel formato corretto per esseree salvato su firebase
+     @param [events] lista eventi di dhxScheduler
+     @return [events] lista di eventi per firebase
+     */
+     this.normalizeEvents = function(events){
+     var out = []
+     for (var e in events){
+     var event = {}
+     event.day = events[e]._sday
+     event.start_time_hours = events[e].start_date.getHours()
+     event.start_time_minutes = events[e].start_date.getMinutes()
+     event.end_time_hours = events[e].end_date.getHours()
+     event.end_time_minutes = events[e].end_date.getMinutes()
+     event.text = events[e].text
+     out.push(event)
+
+     }
+     return out
+     }
     /*
     @param sundayIsFirst  boolean se false il primo giorno della settimana è lunedì altrimenti domenica
     @return int primo giorno della settimana corrente

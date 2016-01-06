@@ -9,7 +9,7 @@ angular.module('studyAssistant.controllers')
     if (!$scope.loginData.email || !$scope.loginData.password)
         Utilities.notify('inserisci password e email')
     else {
-           console.log($scope.loginData)
+           //console.log($scope.loginData)
            var loginCback = function(){
            if (User.isLogged()) {
                 // memorizzo le credenziali di accesso

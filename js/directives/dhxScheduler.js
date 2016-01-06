@@ -5,7 +5,7 @@ angular.module('studyAssistant.directives', [])
 .directive('dhxScheduler', function() {
   return {
     restrict: 'A',
-    scope: false,
+    scope: true,
     transclude: true,
     template:'<div class="dhx_cal_navline" ng-transclude></div><div class="dhx_cal_header"></div><div class="dhx_cal_data"></div>',
 
@@ -18,7 +18,8 @@ angular.module('studyAssistant.directives', [])
          //watch data collection, reload on changes
            $scope.$watch($attrs.data, function(collection){
              $scope.modified = true;
-             scheduler.clearAll();
+             //scheduler.clearAll();
+             console.log('collection',collection)
              scheduler.parse(collection, "json");
            }, true);
 
@@ -32,6 +33,7 @@ angular.module('studyAssistant.directives', [])
            }, true);
 
            //size of scheduler
+           $scope.setScheduler(scheduler)
            $scope.$watch(function() {
              return $element[0].offsetWidth + "." + $element[0].offsetHeight;
            }, function() {
@@ -45,6 +47,7 @@ angular.module('studyAssistant.directives', [])
       //init scheduler
       scheduler.init($element[0], new Date(), "week");
       scheduler.config.first_hour = 8;
+      $scope.setScheduler(scheduler)
     }
   }
 })
