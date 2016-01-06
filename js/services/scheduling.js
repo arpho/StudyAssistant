@@ -19,6 +19,18 @@ crea,aggiorna gli scheling  di un utente
         ref.child('scheduling').child(userKey).set(scheduling,cback)
     }
 
+    /* controlla che lo scheduling sia presente nella lista
+    @param [scheduling] lista di scheduling
+    @param identificativo scheduling
+    @return true se nellalista è presente uno scheduling con lo stesso id*/
+    this.exists = function(lista,id){
+        var out = false
+        for (var s in lista)
+            if ( lista[s].id ==id)
+                out = true // se è presente il valore di out è true
+        return out
+    }
+
     /*normalizza una lista di eventi
      trasforma la lista di eventi ritornatada dhxscheduler
      nel formato corretto per esseree salvato su firebase
