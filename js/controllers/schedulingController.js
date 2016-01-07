@@ -1,5 +1,5 @@
 angular.module('studyAssistant.controllers')
-.controller('schedulingController',['$scope','User','$state','Scheduling','$ionicPopup',function($scope,User,$state,Scheduling, $ionicPopup){
+.controller('schedulingController',['$scope','User','$state','Scheduling','$ionicPopup','Utility',function($scope,User,$state,Scheduling, $ionicPopup,Utility){
     console.log("scheduling c'è")
 
     if(!User.isLogged()){ // utente non loggato
@@ -28,16 +28,16 @@ angular.module('studyAssistant.controllers')
               var scheduling = $scope.activeScheduling||{}
               scheduling.events = Scheduling.normalizeEvents($scope.scheduler.getEvents())
               scheduling.id = $scope.activeScheduling.id || new Date().getTime() // se è una modifica di uno scheduling già esistente conservo l'id,altrimenti lo creo
-              if(!scheduling.name){ //non è stato definito il nome
-                    scheduling.name = 'noname'
+              //if(!scheduling.name){ //non è stato definito il nome
+                    scheduling.name = scheduling.name ||'noname'
                      var myPopup = $ionicPopup.show({
                         template: '<input type="text" ng-model="activeScheduling.name">',
-                        title: 'definisci un nome per la programmazione',
+                        title: 'confermi questo nome per la programmazione?',
                         //subTitle: '',
                         scope: $scope,
                         buttons: [
                           {
-                            text: '<b>Save</b>',
+                            text: '<b>Conferma</b>',
                             type: 'button-calm',
                             onTap: function(e) {
                                 myPopup.close()
@@ -55,12 +55,21 @@ angular.module('studyAssistant.controllers')
                           console.log('Tapped!', res);
                           scheduling.name = res
                         });
-              }
-              if(Scheduling.exists(scheduling.id,$scope.schedulingList))
+             // } // chiude if controllo nome
+              if(Scheduling.exists($scope.schedulingList,scheduling.id))
                  Scheduling.update($scope.schedulingList,scheduling)
               else
                 $scope.schedulingList.push(scheduling) // è un nuovo scheduling non presente in lista
-              console.log('schedulingList',$scope.schedulingList)
+              //console.log('schedulingList',$scope.schedulingList)
+              var ref = Utility.getAuth()
+                , cback = function(err){
+                     if(err)
+                     {
+                        Utility.notify('qualcosa è andato storto')
+                        console.log(err)
+                     }
+                }
+              Scheduling.upsert(ref,User.getUid(),$scope.schedulingList,cback)
         }
         $scope.newEvent = function(){
            var id = $scope.scheduler.addEventNow();

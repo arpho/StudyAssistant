@@ -15,8 +15,8 @@ crea,aggiorna gli scheling  di un utente
 @param lista dei recall::[{recall:""}]
 @param funzione invocata all'avvenuta sincronizzazione con firebase, alla funzione è passato un oggwetto errorObject in caso di errore, altrimenti null
 */
-    this.Upsert = function(ref,userKey,scheduling,cback){
-        ref.child('scheduling').child(userKey).set(scheduling,cback)
+    this.upsert = function(ref,userKey,schedulingList,cback){
+        ref.child('scheduling').child(userKey).set(schedulingList,cback)
     }
 
     /* controlla che lo scheduling sia presente nella lista
@@ -51,6 +51,18 @@ crea,aggiorna gli scheling  di un utente
 
      }
      return out
+     }
+
+     /*
+     sostituisce lo scheduling nella lista degli scheduling avente lo stesso id
+     @param [scheduling] la lista di scheduling
+     @param scheduling: scheduling aggiornato
+     */
+     this.update = function(schedulingList, schedule){
+        for (var s in schedulingList){
+            if (schedulingList[s].id== schedule.id)
+                schedulingList[s] = schedule
+        }
      }
     /*
     @param sundayIsFirst  boolean se false il primo giorno della settimana è lunedì altrimenti domenica
