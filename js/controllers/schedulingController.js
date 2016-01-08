@@ -1,18 +1,35 @@
 angular.module('studyAssistant.controllers')
 .controller('schedulingController',['$scope','User','$state','Scheduling','$ionicPopup','Utility',function($scope,User,$state,Scheduling, $ionicPopup,Utility){
-    console.log("scheduling c'è")
 
     if(!User.isLogged()){ // utente non loggato
             console.log('utente non loggato')
             $state.go('app.login')
         }
      else{
+
+     var setScheduling = function(scheduling){
+     $scope.activeScheduling = scheduling
+     for (var s in scheduling.events){
+        scheduler.addEvent(Scheduling.formatEvent(scheduling.events[s]))
+     }
+     }
      /*
      viene invocata dalla direttiva dhxscheduler per settare lo scheduler nel suo parent
      */
         $scope.setScheduler = function(scheduler){
             $scope.scheduler = scheduler
         }
+        var cbackGetScheduling = function(res){
+            console.log('res',res.val())
+            $scope.schedulingList =res.val()
+            //if($scope.schedulingList.length==1){
+                setScheduling($scope.schedulingList[0])
+                //$scope.activeScheduling = $scope.schedulingList[0]
+                console.log('activeScheduling',$scope.activeScheduling)
+            //}
+        }
+        //carico gli scheduling dal server
+        Scheduling.retrieveScheduling(Utility.getAuth(),User.getUid(),cbackGetScheduling)
         $scope.events = [
                 /*{ id:1, text:"Task A-12458",
                   start_date: new Date(2016, 1, 06, 9, 0),
@@ -77,8 +94,10 @@ angular.module('studyAssistant.controllers')
         }
         $scope.newScheduling = function() {
             console.log('new scheduling')
+            $scope.activeScheduling = {}
+            $scope.activeScheduling.name = "Nuova programmazione"
+            scheduler.clearAll()
         }
-            console.log('novità')
         }
      }
 ])

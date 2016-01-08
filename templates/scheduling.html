@@ -1,8 +1,6 @@
-<ion-view view-title="Programmazione">
+<ion-view view-title="Programmazione: {{activeScheduling.name}}">
     <ion-content ng-class="{expanded:$scope.isExpanded}">
             <div class="content">
-
-
                 <div dhx-scheduler data="events | filter:search"  style="height:100em; width:full;position:relative;top:2em;">
                     <div class="dhx_cal_prev_button">&nbsp;</div>
                     <div class="dhx_cal_next_button">&nbsp;</div>

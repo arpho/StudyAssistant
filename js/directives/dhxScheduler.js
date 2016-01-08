@@ -19,7 +19,6 @@ angular.module('studyAssistant.directives', [])
            $scope.$watch($attrs.data, function(collection){
              $scope.modified = true;
              //scheduler.clearAll();
-             console.log('collection',collection)
              scheduler.parse(collection, "json");
            }, true);
 

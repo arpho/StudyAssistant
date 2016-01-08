@@ -1,11 +1,11 @@
 angular.module('studyAssistant.services')
-.service("Scheduling",[function(){
+.service("Scheduling",['Utility',function(Utility){
 /*ottiene da firebase i recall relativi ad un task
     @param: ref al progetto su firebase
     @param: scheduleId
     @paream: function callback funzione che prende come parametro un errorObject
 */
-    this.getScheduling = function(ref,userKey,cback){
+    this.retrieveScheduling = function(ref,userKey,cback){
         ref.child('scheduling').child(userKey).on("value", cback, cback)
     }
 /*
@@ -19,6 +19,7 @@ crea,aggiorna gli scheling  di un utente
         ref.child('scheduling').child(userKey).set(schedulingList,cback)
     }
 
+
     /* controlla che lo scheduling sia presente nella lista
     @param [scheduling] lista di scheduling
     @param identificativo scheduling
@@ -30,6 +31,35 @@ crea,aggiorna gli scheling  di un utente
                 out = true // se è presente il valore di out è true
         return out
     }
+
+/*formatta la data di un evento in modo che sia visibile nello scheduler
+@param Date oggetto data del giorno new Date()
+@param int giorno della settimana da 0 a 6
+@param int ora
+@param int minuti
+@return String "16-06-2013 09:00"
+*/
+var formatDate = function(today,day,hours,minutes){
+out = new Date()
+out.setDate(today.getDate()-day)
+out.setHours(hours)
+out.setMinutes(minutes)
+return out
+}
+        /*
+        formatta un evento in modo che sia compatibile con dhxscheduler
+        @param event così come scaricato da firebase
+        @return event formattato per dhxscheduler
+        */
+        this.formatEvent = function(rawEvent){
+        console.log(rawEvent)
+            var event = {}
+            event.start_date = formatDate(new Date(),rawEvent.day,rawEvent.start_time_hours,rawEvent.start_time_minutes)
+            event.end_date = formatDate(new Date(),rawEvent.day,rawEvent.end_time_hours,rawEvent.end_time_minutes)
+            event.text = rawEvent.text
+            console.log('evento normalizzato',event)
+        return event
+        }
 
     /*normalizza una lista di eventi
      trasforma la lista di eventi ritornatada dhxscheduler
