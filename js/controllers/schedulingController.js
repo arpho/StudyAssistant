@@ -9,6 +9,7 @@ angular.module('studyAssistant.controllers')
 
      var setScheduling = function(scheduling){
      $scope.activeScheduling = scheduling
+     scheduler.clearAll()// ad ogni caricamento ripulisco lo scheduler
      for (var s in scheduling.events){
         scheduler.addEvent(Scheduling.formatEvent(scheduling.events[s]))
      }
