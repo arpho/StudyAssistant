@@ -6,7 +6,7 @@ angular.module('studyAssistant.services')
     @paream: function callback funzione che prende come parametro un errorObject
 */
     this.retrieveScheduling = function(ref,userKey,cback){
-        ref.child('scheduling').child(userKey).on("value", cback, cback)
+        ref.child('scheduling').child(userKey).once("value", cback, cback)
     }
 /*
 crea,aggiorna gli scheling  di un utente
