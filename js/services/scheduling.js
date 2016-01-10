@@ -52,12 +52,10 @@ return out
         @return event formattato per dhxscheduler
         */
         this.formatEvent = function(rawEvent){
-        console.log(rawEvent)
             var event = {}
             event.start_date = formatDate(new Date(),rawEvent.day,rawEvent.start_time_hours,rawEvent.start_time_minutes)
             event.end_date = formatDate(new Date(),rawEvent.day,rawEvent.end_time_hours,rawEvent.end_time_minutes)
             event.text = rawEvent.text
-            console.log('evento normalizzato',event)
         return event
         }
 

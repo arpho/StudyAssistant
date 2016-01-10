@@ -21,12 +21,10 @@ angular.module('studyAssistant.controllers')
             $scope.scheduler = scheduler
         }
         var cbackGetScheduling = function(res){
-            console.log('res',res.val())
             $scope.schedulingList =res.val()
             //if($scope.schedulingList.length==1){
                 setScheduling($scope.schedulingList[0])
                 //$scope.activeScheduling = $scope.schedulingList[0]
-                console.log('activeScheduling',$scope.activeScheduling)
             //}
         }
         //carico gli scheduling dal server
@@ -47,7 +45,7 @@ angular.module('studyAssistant.controllers')
               scheduling.events = Scheduling.normalizeEvents($scope.scheduler.getEvents())
               scheduling.id = $scope.activeScheduling.id || new Date().getTime() // se è una modifica di uno scheduling già esistente conservo l'id,altrimenti lo creo
               //if(!scheduling.name){ //non è stato definito il nome
-                    scheduling.name = scheduling.name ||'noname'
+                    scheduling.name = $scope.activeScheduling.name ||'noname'
                      var myPopup = $ionicPopup.show({
                         template: '<input type="text" ng-model="activeScheduling.name">',
                         title: 'confermi questo nome per la programmazione?',
