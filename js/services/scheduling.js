@@ -54,11 +54,11 @@ return out
         */
         this.formatEvent = function(rawEvent){
             var event = {}
-            //per dhxscheduler considera la domenica primo giorno della settimana, quindi sottraggo a day 1
-            event.start_date = formatDate(new Date(),rawEvent.day-1,rawEvent.start_time_hours,rawEvent.start_time_minutes)
-            event.end_date = formatDate(new Date(),rawEvent.day-1,rawEvent.end_time_hours,rawEvent.end_time_minutes)
+            var sunday = new Date()  //inizializzo l'oggetto che sarà la domenica della settimana corrente
+            sunday.setDate(sunday.getDate()-sunday.getDay())// ricavo il giornodi domenica
+            event.start_date = formatDate(sunday,rawEvent.day,rawEvent.start_time_hours,rawEvent.start_time_minutes)
+            event.end_date = formatDate(sunday,rawEvent.day,rawEvent.end_time_hours,rawEvent.end_time_minutes)
             event.text = rawEvent.text
-            console.log('evento formattato',event)
         return event
         }
 
