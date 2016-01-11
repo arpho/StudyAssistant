@@ -33,7 +33,7 @@ crea,aggiorna gli scheling  di un utente
     }
 
 /*formatta la data di un evento in modo che sia visibile nello scheduler
-@param Date oggetto data del giorno new Date()
+@param Date oggetto data del giorno new Date() primo giorno della settimana corrente
 @param int giorno della settimana da 0 a 6
 @param int ora
 @param int minuti
@@ -41,9 +41,10 @@ crea,aggiorna gli scheling  di un utente
 */
 var formatDate = function(today,day,hours,minutes){
 out = new Date()
-out.setDate(today.getDate()-day)
+out.setDate(today.getDate()+day)
 out.setHours(hours)
 out.setMinutes(minutes)
+
 return out
 }
         /*
@@ -53,9 +54,11 @@ return out
         */
         this.formatEvent = function(rawEvent){
             var event = {}
-            event.start_date = formatDate(new Date(),rawEvent.day,rawEvent.start_time_hours,rawEvent.start_time_minutes)
-            event.end_date = formatDate(new Date(),rawEvent.day,rawEvent.end_time_hours,rawEvent.end_time_minutes)
+            //per dhxscheduler considera la domenica primo giorno della settimana, quindi sottraggo a day 1
+            event.start_date = formatDate(new Date(),rawEvent.day-1,rawEvent.start_time_hours,rawEvent.start_time_minutes)
+            event.end_date = formatDate(new Date(),rawEvent.day-1,rawEvent.end_time_hours,rawEvent.end_time_minutes)
             event.text = rawEvent.text
+            console.log('evento formattato',event)
         return event
         }
 
