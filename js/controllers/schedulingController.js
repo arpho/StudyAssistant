@@ -11,6 +11,7 @@ angular.module('studyAssistant.controllers')
      $scope.activeScheduling = scheduling
      scheduler.clearAll()// ad ogni caricamento ripulisco lo scheduler
      for (var s in scheduling.events){
+        console.log('evento',scheduling.events[s])
         scheduler.addEvent(Scheduling.formatEvent(scheduling.events[s]))
      }
      }
@@ -38,14 +39,13 @@ angular.module('studyAssistant.controllers')
                   end_date: new Date(2015, 11, 30, 16, 0) }*/
               ];
         $scope.saveScheduling = function(){
-              $scope.activeScheduling = $scope.activeScheduling ||{}
 
               $scope.schedulingList = $scope.scheduLingList ||[]
               var scheduling = $scope.activeScheduling||{}
               scheduling.events = Scheduling.normalizeEvents($scope.scheduler.getEvents())
               scheduling.id = $scope.activeScheduling.id || new Date().getTime() // se è una modifica di uno scheduling già esistente conservo l'id,altrimenti lo creo
               //if(!scheduling.name){ //non è stato definito il nome
-                    scheduling.name = $scope.activeScheduling.name ||'noname'
+                    scheduling.name = $scope.activeScheduling.name
                      var myPopup = $ionicPopup.show({
                         template: '<input type="text" ng-model="activeScheduling.name">',
                         title: 'confermi questo nome per la programmazione?',

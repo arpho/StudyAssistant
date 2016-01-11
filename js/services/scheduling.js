@@ -55,10 +55,11 @@ return out
         this.formatEvent = function(rawEvent){
             var event = {}
             var sunday = new Date()  //inizializzo l'oggetto che sarà la domenica della settimana corrente
-            sunday.setDate(sunday.getDate()-sunday.getDay())// ricavo il giornodi domenica
-            event.start_date = formatDate(sunday,rawEvent.day,rawEvent.start_time_hours,rawEvent.start_time_minutes)
-            event.end_date = formatDate(sunday,rawEvent.day,rawEvent.end_time_hours,rawEvent.end_time_minutes)
+            sunday.setDate(sunday.getDate()-sunday.getDay())// ricavo il giorno di domenica
+            event.start_date = formatDate(sunday,rawEvent.day+1,rawEvent.start_time_hours,rawEvent.start_time_minutes)
+            event.end_date = formatDate(sunday,rawEvent.day+1,rawEvent.end_time_hours,rawEvent.end_time_minutes)
             event.text = rawEvent.text
+            console.log('evento formattato',event)
         return event
         }
 
