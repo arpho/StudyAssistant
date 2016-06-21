@@ -1,5 +1,5 @@
 angular.module('studyAssistant.services', [])
-.service('User', [ 'Utility',function(Utility) {
+.service('User', [ 'Utility','PouchDbService',function(Utility,PouchDb) {
     var user = {};
     user.logged
     var baseUrl = 'https://studywod.firebaseio.com//'; //TODO da eliminare

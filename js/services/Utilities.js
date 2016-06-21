@@ -136,7 +136,7 @@ angular.module('studyAssistant.services').factory('Utility',['$firebaseAuth'
     };
         var  baseUrl = 'https://studywod.firebaseio.com/';
                 var auth = new Firebase(baseUrl);
-                //Firebase.getDefaultConfig().setPersistenceEnabled(true);
+                //auth.getInstance().setPersistenceEnabled(true);
                 var getAuth = function(){
                     return auth
                 }
