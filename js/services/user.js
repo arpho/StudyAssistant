@@ -1,8 +1,15 @@
 angular.module('studyAssistant.services', [])
-.service('User', [ 'Utility','PouchDbService',function(Utility,PouchDb) {
+.service('User', [ 'Utility',function(Utility) {
     var user = {};
     user.logged
     var baseUrl = 'https://studywod.firebaseio.com//'; //TODO da eliminare
+    // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyBSxxAAq-QpwtxFIThpdAje_8W2Y6NAT3s",
+        authDomain: "studywod.firebaseapp.com",
+        databaseURL: "https://studywod.firebaseio.com",
+        storageBucket: "project-567040840297862864.appspot.com",
+      };
     var auth = Utility.getAuth();
     this.setUsername = function(username){
         user.username = username
