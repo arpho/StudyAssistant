@@ -2,7 +2,7 @@ angular.module('studyAssistant.services', [])
 .service('User', [ 'Utility',function(Utility) {
     var user = {};
     user.logged
-    var baseUrl = 'https://studywod.firebaseio.com//'; //TODO da eliminare
+    var baseUrl = 'https://studywod.firebaseio.com//';
     // Initialize Firebase
       var config = {
         apiKey: "AIzaSyBSxxAAq-QpwtxFIThpdAje_8W2Y6NAT3s",
