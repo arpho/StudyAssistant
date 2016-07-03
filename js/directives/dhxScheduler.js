@@ -45,7 +45,8 @@ angular.module('studyAssistant.directives', [])
 
       //init scheduler
       scheduler.init($element[0], new Date(), "week");
-      scheduler.config.first_hour = 8;
+      scheduler.config.first_hour = 7;
+      scheduler.config.start_on_monday = false;
       $scope.setScheduler(scheduler)
     }
   }
